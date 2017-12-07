@@ -36,8 +36,8 @@ public class ExposureTextView<T> extends TextView implements ExposureView<T> {
     }
 
     @Override
-    public void bindListData(@Nullable T t, int position, @Nullable ExposureCallback<T> callback) {
-        mExposureView.bindListData(t, position, callback);
+    public void bindRecyclerData(@Nullable T t, int position, @Nullable ExposureCallback<T> callback) {
+        mExposureView.bindRecyclerData(t, position, callback);
     }
 
     @Override

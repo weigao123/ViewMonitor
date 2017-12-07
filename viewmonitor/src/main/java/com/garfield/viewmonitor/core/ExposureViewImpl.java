@@ -20,10 +20,11 @@ public class ExposureViewImpl<T> implements ExposureView<T> {
 
     private final static int HIDDEN = 0;
     private final static int EXPOSURE = 1;
-    private boolean mViewVisible = false;   // Fragment切换不可见，而实际状态可见
+    private boolean mViewVisible = true;   // Fragment切换不可见，而实际状态可见
     private int mViewState = HIDDEN;        // 是否曝光
 
     private boolean mIsLayoutEnd;
+    private boolean mIsRecyclerView;
 
     private Rect mRegionRect = new Rect(0, 0, ScreenUtil.screenWidth, ScreenUtil.screenHeight);
 
@@ -44,11 +45,15 @@ public class ExposureViewImpl<T> implements ExposureView<T> {
     }
 
     @Override
-    public void bindListData(@Nullable T t, int position, @Nullable ExposureCallback<T> callback) {
+    public void bindRecyclerData(@Nullable T t, int position, @Nullable ExposureCallback<T> callback) {
         mT = t;
         mPosition = position;
         mCallback = callback;
+        // recyclerView may be bind before appear into sight.
+        // but, calcExposure make its state hidden.
+        // only onVisibilityChanged can change its state.
         if (mViewVisible) {
+            mViewState = EXPOSURE;
             onExposure(t, position);
         }
     }
@@ -105,7 +110,7 @@ public class ExposureViewImpl<T> implements ExposureView<T> {
                     mViewState = EXPOSURE;
                     onExposure(mT, mPosition);
                 }
-            } else {
+            } else if (!mIsRecyclerView) {
                 mViewState = HIDDEN;
             }
         }
@@ -128,7 +133,9 @@ public class ExposureViewImpl<T> implements ExposureView<T> {
 
     @Override
     public void onAttachedToWindow() {
+        // fragment2 does not attach when hide.
         mRootLayout = ViewHook.getRootLayout(mView);
+        mIsRecyclerView = ViewHook.isRecyclerView(mView);
         if (mRootLayout != null) {
             mRootLayout.hookParent(mView);
             mRootLayout.register((ExposureView) mView);

@@ -26,7 +26,7 @@ ExposureManager.getInstance().init(this);
 
 // 绑定数据
 【ListView、RecycleView】
-mExposureView.bindListData(data, position, callback);
+mExposureView.bindRecyclerData(data, position, callback);
 【ScrollView、ViewPager】
 mExposureView.bindData(data, position, null, callback);
 

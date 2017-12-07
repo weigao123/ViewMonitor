@@ -1,8 +1,10 @@
 package com.garfield.viewmonitor.core;
 
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewParent;
+import android.widget.AbsListView;
 
 import com.garfield.viewmonitor.api.view.ExposureScrollView;
 import com.garfield.viewmonitor.api.view.ExposureScrollViewH;
@@ -26,6 +28,17 @@ class ViewHook {
             viewParent = viewParent.getParent();
         }
         return null;
+    }
+
+    static boolean isRecyclerView(View view) {
+        ViewParent viewParent = view.getParent();
+        while (viewParent != null) {
+            if (viewParent instanceof RecyclerView || viewParent instanceof AbsListView) {
+                return true;
+            }
+            viewParent = viewParent.getParent();
+        }
+        return false;
     }
 
     void hookParent(View view) {

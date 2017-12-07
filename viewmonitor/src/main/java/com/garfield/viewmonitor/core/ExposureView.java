@@ -12,7 +12,7 @@ import com.garfield.viewmonitor.api.ExposureCallback;
 
 public interface ExposureView<T> {
 
-    void bindListData(T t, int position, ExposureCallback<T> callback);
+    void bindRecyclerData(T t, int position, ExposureCallback<T> callback);
 
     void bindData(T t, int position, Rect rect, ExposureCallback<T> callback);
 

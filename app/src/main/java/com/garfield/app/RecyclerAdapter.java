@@ -51,7 +51,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mTextView.bindListData("-RecyclerView", position, null);
+        holder.mTextView.bindRecyclerData("-RecyclerView", position, null);
         holder.mTextView.setText(mDataset[position]);
     }
 

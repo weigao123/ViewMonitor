@@ -36,6 +36,7 @@ class ViewHook {
                 if (mViewPagerListener == null) {
                     mViewPagerListener = new ViewPagerListener(rootLayout);
                 }
+                ((ViewPager) viewParent).removeOnPageChangeListener(mViewPagerListener);
                 ((ViewPager) viewParent).addOnPageChangeListener(mViewPagerListener);
             }
             if (viewParent instanceof ExposureScrollView) {
@@ -43,6 +44,7 @@ class ViewHook {
                 if (mScrollChangeListener == null) {
                     mScrollChangeListener = new ScrollChangeListener(rootLayout);
                 }
+                ((ExposureScrollView) viewParent).removeOnScrollChangeListener(mScrollChangeListener);
                 ((ExposureScrollView) viewParent).addOnScrollChangeListener(mScrollChangeListener);
             }
             if (viewParent instanceof ExposureScrollViewH) {
@@ -50,6 +52,7 @@ class ViewHook {
                 if (mScrollChangeListener == null) {
                     mScrollChangeListener = new ScrollChangeListener(rootLayout);
                 }
+                ((ExposureScrollViewH) viewParent).removeOnScrollChangeListener(mScrollChangeListener);
                 ((ExposureScrollViewH) viewParent).addOnScrollChangeListener(mScrollChangeListener);
             }
             viewParent = viewParent.getParent();
@@ -66,7 +69,7 @@ class ViewHook {
 
         @Override
         public void onPageScrolled(int i, float v, int i1) {
-            mRootLayout.notifyScrollChange();
+
         }
 
         @Override
@@ -76,7 +79,7 @@ class ViewHook {
 
         @Override
         public void onPageScrollStateChanged(int i) {
-
+            mRootLayout.notifyScrollChange();
         }
     }
 

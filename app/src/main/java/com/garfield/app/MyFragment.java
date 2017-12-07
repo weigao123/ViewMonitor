@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.garfield.viewmonitor.api.view.ExposureFrameLayout;
+import com.garfield.viewmonitor.api.view.ExposureTextView;
 
 /**
  * Created by gaowei on 2017/12/6.
@@ -43,14 +44,15 @@ public class MyFragment extends Fragment {
         viewPager.setAdapter(viewPagerAdapter);
 
         ExposureFrameLayout layout = (ExposureFrameLayout) view.findViewById(R.id.clickview);
-        layout.bindData("-click", 0, null, null);
+        layout.bindData("-button", 0, null, null);
         TextView textView = (TextView) view.findViewById(R.id.click_me);
         textView.setOnClickListener(clickListener);
 
         LinearLayout horizontalScrollView = (LinearLayout) view.findViewById(R.id.horizontal_scrollview);
         int size = (int) getResources().getDisplayMetrics().density * 100;
         for (int i = 0; i < 10; i++) {
-            TextView item = new TextView(getContext());
+            ExposureTextView item = new ExposureTextView(getContext());
+            item.bindData("-ScrollView", i, null, null);
             item.setTextColor(Color.BLACK);
             item.setGravity(Gravity.CENTER);
             item.setText("item " + i);

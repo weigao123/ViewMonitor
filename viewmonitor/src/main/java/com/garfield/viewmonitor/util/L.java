@@ -8,11 +8,13 @@ import android.util.Log;
 
 public class L {
 
+    private static final String TAG = "view_monitor";
+
     public static void d(Object object) {
-        Log.d("gaowei", object.toString());
+        Log.d(TAG, object.toString());
     }
 
     public static void e(Object object) {
-        Log.e("gaowei", object.toString());
+        Log.e(TAG, object.toString());
     }
 }

@@ -61,7 +61,7 @@ public class ExposureViewImpl<T> implements ExposureView<T> {
         if (rect != null) {
             mRegionRect = rect;
         }
-        calcExposure();
+        postCalcExposure();
     }
 
     @Override
@@ -77,10 +77,21 @@ public class ExposureViewImpl<T> implements ExposureView<T> {
             view = parent != null && parent instanceof View ? (View) parent : null;
         }
         if (mViewVisible) {
-            calcExposure();
+            // switch fragment may not be able to get view's size immediately.
+            postCalcExposure();
         } else {
             mViewState = HIDDEN;
         }
+    }
+
+    private void postCalcExposure() {
+        mView.post(new Runnable() {
+            @Override
+            public void run() {
+                mIsLayoutEnd = true;
+                calcExposure();
+            }
+        });
     }
 
     private void calcExposure() {
@@ -88,6 +99,7 @@ public class ExposureViewImpl<T> implements ExposureView<T> {
             mView.getLocationOnScreen(mLocation);
             int viewWidth = mView.getMeasuredWidth();
             int viewHeight = mView.getMeasuredHeight();
+            if (viewWidth == 0 || viewHeight == 0) return;
             if (mRegionRect.contains(mLocation[0], mLocation[1], mLocation[0] + viewWidth, mLocation[1] + viewHeight)) {
                 if (mViewState == HIDDEN) {
                     mViewState = EXPOSURE;
@@ -121,13 +133,7 @@ public class ExposureViewImpl<T> implements ExposureView<T> {
             mRootLayout.hookParent(mView);
             mRootLayout.register((ExposureView) mView);
         }
-        mView.post(new Runnable() {
-            @Override
-            public void run() {
-                mIsLayoutEnd = true;
-                calcExposure();
-            }
-        });
+        postCalcExposure();
     }
 
     @Override

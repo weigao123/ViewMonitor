@@ -32,9 +32,6 @@ public class ExposureManager {
     }
 
     private void attachTrackerFrameLayout(Activity activity) {
-        if (activity == null) {
-            return;
-        }
         try {
             ViewGroup container = (ViewGroup) activity.findViewById(android.R.id.content);
             if (container == null) {
@@ -57,9 +54,6 @@ public class ExposureManager {
     }
 
     private void detachTrackerFrameLayout(Activity activity) {
-        if (activity == null) {
-            return;
-        }
         try {
             ViewGroup container = (ViewGroup) activity.findViewById(android.R.id.content);
             if (container == null) {
